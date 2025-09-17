@@ -1,0 +1,12 @@
+{
+  "name": "Planilha 2.0",
+  "short_name": "Planilha2",
+  "description": "Organize suas finanças em poucos minutos por dia.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#0c0f1a",
+  "theme_color": "#7a2cff",
+  "icons": [
+    {"src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml"}
+  ]
+}

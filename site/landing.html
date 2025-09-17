@@ -32,8 +32,19 @@
     };
   </script>
   <style>body{font-family:'Poppins',sans-serif;}html{scroll-behavior:smooth;}</style>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <!-- Consent / analytics placeholder será injetado via script após consent -->
 </head>
 <body class="bg-dark text-white min-h-screen flex flex-col antialiased">
+  <div id="consent-banner" style="position:fixed;inset:auto 0 0 0;display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:#171a2b;border-top:1px solid #2a2f45;padding:14px 18px;font-size:.85rem;z-index:50">
+    <span>Usamos cookies para métricas anônimas e melhoria da experiência. Pode aceitar?</span>
+    <div style="display:flex;gap:8px">
+      <button id="consent-accept" style="background:#00ff88;color:#0c0f1a;font-weight:600;border:none;border-radius:8px;padding:8px 14px;cursor:pointer">Aceitar</button>
+      <button id="consent-deny" style="background:transparent;color:#fff;border:1px solid #2f3548;border-radius:8px;padding:8px 14px;cursor:pointer">Recusar</button>
+    </div>
+  </div>
+
   <main id="principal" class="flex-1">
     <!-- HERO -->
     <section id="hero" class="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 bg-gradient-to-b from-dark to-card">
@@ -432,6 +443,25 @@
               });
             }, { threshold: 0.15 });
             animated.forEach(el => io.observe(el));
+          })();
+
+          (function(){
+            const KEY='pg_consent_v1';
+            const stored=localStorage.getItem(KEY);
+            const banner=document.getElementById('consent-banner');
+            function loadAnalytics(){
+              // GA placeholder
+              const g=document.createElement('script');
+              g.async=true; g.src='https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX';
+              document.head.appendChild(g);
+              const inline=document.createElement('script');
+              inline.textContent="window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-XXXXXXX',{anonymize_ip:true});";
+              document.head.appendChild(inline);
+            }
+            if(stored==='accepted'){ banner.remove(); loadAnalytics(); }
+            if(stored==='denied'){ banner.remove(); }
+            document.getElementById('consent-accept').addEventListener('click',()=>{localStorage.setItem(KEY,'accepted');loadAnalytics();banner.remove();});
+            document.getElementById('consent-deny').addEventListener('click',()=>{localStorage.setItem(KEY,'denied');banner.remove();});
           })();
         </script>
       </body>
