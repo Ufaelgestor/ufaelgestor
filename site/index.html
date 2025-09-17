@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Planilha 2.0 – Controle financeiro simples e prático</title>
+  <meta name="description" content="Pare de ver seu salário sumir. Em 5 minutos por dia, descubra para onde vai cada centavo e faça o dinheiro SOBRAR com a Planilha 2.0." />
+  <meta name="theme-color" content="#6f3cff" />
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="Planilha 2.0 – Controle financeiro simples e prático" />
+  <meta property="og:description" content="5 min/dia para enxergar para onde vai seu dinheiro e começar a sobrar. Acesso imediato + 5 aulas + garantia de 7 dias." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://ufaelgestor.com.br/og-planilha2.jpg" />
+  <meta property="og:url" content="https://ufaelgestor.com.br/" />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    :root{
+      --bg1:#0c0f1a; --bg2:#171a2b; --grad1:#7a2cff; --grad2:#00e6a8; --text:#e7e9ee; --muted:#aeb3c7; --card:#121527; --brand:#7a2cff; --brand-2:#00e6a8; --danger:#ff5e5e;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'Helvetica Neue',Arial,'Noto Sans',sans-serif;color:var(--text);background:radial-gradient(1200px 600px at 10% -10%,rgba(122,44,255,.25),transparent),linear-gradient(180deg,var(--bg1),var(--bg2));}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1120px;margin:0 auto;padding:0 20px}
+    .btn{display:inline-flex;align-items:center;gap:.6rem;background:linear-gradient(90deg,var(--brand),#9d66ff);color:#fff;font-weight:700;border:none;border-radius:14px;padding:14px 22px;box-shadow:0 12px 30px rgba(122,44,255,.25);transition:.25s;cursor:pointer}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(122,44,255,.35)}
+    .btn--ghost{background:transparent;border:2px solid rgba(255,255,255,.18);box-shadow:none}
+    .btn--green{background:linear-gradient(90deg,var(--brand-2),#2df2c0);box-shadow:0 12px 30px rgba(0,230,168,.25)}
+    .badge{display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);padding:6px 10px;border-radius:999px;color:#dfe3f7;font-size:.85rem}
+    .grid{display:grid;gap:26px}
+    .hero{padding:48px 0 28px;border-bottom:1px solid rgba(255,255,255,.06)}
+    .hero__wrap{display:grid;gap:26px;grid-template-columns:1.1fr .9fr;align-items:center}
+    .h1{font-size:clamp(28px,4vw,48px);line-height:1.08;margin:12px 0 8px}
+    .h2{font-size:clamp(24px,3vw,36px);margin:0 0 12px}
+    .lead{color:#d9dcf0;font-size:1.1rem;line-height:1.6}
+    .muted{color:var(--muted)}
+    .checks{display:grid;gap:10px;margin:18px 0}
+    .check{display:flex;gap:.6rem;align-items:flex-start}
+    .check i{width:20px;height:20px;border-radius:6px;background:linear-gradient(90deg,var(--brand-2),#36ffd4);display:inline-block;margin-top:2px}
+    .cta-row{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:18px}
+    .price-pill{display:inline-flex;align-items:center;gap:.4rem;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.12);padding:8px 12px;border-radius:999px}
+    .shot{border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:0 16px 60px rgba(0,0,0,.35)}
+    .section{padding:64px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px}
+    .card h4{margin:6px 0 8px}
+    .icons{font-size:22px}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .frame{background:#0b0e1a;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px;text-align:center}
+    .frame img{width:100%;border-radius:10px}
+    .list{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+    .list li{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:12px 14px;border-radius:12px}
+    .split{display:grid;grid-template-columns:1fr .9fr;gap:26px;align-items:center}
+    .quote{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);padding:16px;border-radius:14px}
+    .quotes{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .faq details{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px}
+    .faq summary{cursor:pointer;font-weight:600}
+    .footer{padding:36px 0;color:var(--muted);font-size:.95rem}
+    .ribbon{position:sticky;top:0;z-index:50;background:linear-gradient(90deg,rgba(122,44,255,.25),rgba(0,230,168,.25));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .ribbon__wrap{display:flex;gap:14px;align-items:center;justify-content:center;min-height:42px}
+    .count{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:6px 10px;border-radius:999px}
+    .note{font-size:.92rem;color:var(--muted)}
+    @media (max-width: 980px){.hero__wrap{grid-template-columns:1fr}.split{grid-template-columns:1fr}.cards,.quotes,.gallery,.list{grid-template-columns:1fr}.list{gap:10px}}
+  </style>
+</head>
+<body>
+  <!-- Ribbon / Oferta e Urgência -->
+  <div class="ribbon">
+    <div class="container ribbon__wrap">
+      <span class="badge">Oferta ativa hoje</span>
+      <span class="count">⏳ Bônus expira em <strong id="countdown">23:59</strong></span>
+      <a class="btn btn--green" href="#comprar">Garantir acesso</a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero" id="topo">
+    <div class="container hero__wrap">
+      <div>
+        <h1 class="h1">Pare de ver seu salário sumir. <br>Em <span style="color:var(--brand-2)">5 minutos por dia</span> descubra para onde vai o dinheiro e faça SOBRAR.</h1>
+        <p class="lead">A <strong>Planilha 2.0</strong> é simples e visual. Mostra, em segundos, quanto vai para <em>Casa, Alimentação, Transporte</em> e outras áreas. Ideal para uso individual ou em casal.
+        </p>
+        <div class="checks">
+          <div class="check"><i></i><div>Personalizável + <strong>5 videoaulas</strong> passo a passo (acesso imediato).</div></div>
+          <div class="check"><i></i><div>Funciona no <strong>celular</strong> (Google Planilhas) e no <strong>computador</strong>.</div></div>
+          <div class="check"><i></i><div>Pagamento seguro via <strong>Cakto</strong> + <strong>garantia de 7 dias</strong>.</div></div>
+        </div>
+        <div class="cta-row">
+          <a class="btn" id="comprar" data-utm-append href="https://pay.cakto.com.br/SEU-LINK">Quero minha planilha por R$ 37,97</a>
+          <span class="price-pill">💳 ou em até 12x no cartão</span>
+        </div>
+        <p class="note">Menos que uma pizza. Mais tranquilidade financeira. Acesso imediato.</p>
+      </div>
+      <div>
+        <img class="shot" src="/imgs/hero-thumb.jpg" alt="Screenshot da Planilha 2.0 com dashboard de gastos" />
+      </div>
+    </div>
+  </header>
+
+  <!-- BENEFÍCIOS / TRANSFORMAÇÃO -->
+  <section class="section">
+    <div class="container">
+      <h2 class="h2">Clareza instantânea do seu mês</h2>
+      <p class="muted">Veja quanto foi para cada área e decida com calma o que ajustar. No modo casal (opcional), você enxerga quem gastou, em quê e quanto — sem discussões intermináveis.</p>
+      <ul class="list">
+        <li>🔎 Descubra onde o dinheiro some (gastos invisíveis como delivery e tarifas).</li>
+        <li>🧭 Tenha limite por área para saber <em>quanto posso gastar</em> sem culpa.</li>
+        <li>💚 Pare de brigar por dinheiro: números à vista, decisões sem adivinhação.</li>
+        <li>📈 Faça sobrar no fim do mês para reservar, quitar dívidas ou investir.</li>
+      </ul>
+      <div class="gallery" aria-label="Galeria de telas da planilha">
+        <div class="frame"><img src="/imgs/dashboard.jpg" alt="Dashboard da planilha com categorias e percentuais" /><small class="muted">Visual do Dashboard</small></div>
+        <div class="frame"><img src="/imgs/despesas.jpg" alt="Aba de despesas" /><small class="muted">Aba de Despesas</small></div>
+        <div class="frame"><img src="/imgs/receitas.jpg" alt="Aba de receitas" /><small class="muted">Aba de Receitas</small></div>
+      </div>
+      <div style="margin-top:18px"><a class="btn" data-utm-append href="https://pay.cakto.com.br/SEU-LINK">Garantir minha Planilha 2.0</a></div>
+    </div>
+  </section>
+
+  <!-- DOR -->
+  <section class="section">
+    <div class="container">
+      <h2 class="h2">Sem um controle simples, o que acontece na prática?</h2>
+      <div class="cards">
+        <div class="card"><h4>Fim do mês no vermelho</h4><p class="muted">“Comprei porque o boleto ia vencer; só vi quando já estourou.”</p></div>
+        <div class="card"><h4>Brigas por dinheiro</h4><p class="muted">Sem números claros, o casal discute por percepções — não por fatos.</p></div>
+        <div class="card"><h4>Gastos invisíveis</h4><p class="muted">Assinaturas, tarifas e “centavo a centavo” viram um rombo no fim do mês.</p></div>
+        <div class="card"><h4>Metas sempre adiadas</h4><p class="muted">Casa, carro, viagem e reserva de emergência ficam para “depois”.</p></div>
+        <div class="card"><h4>Não saber “quanto posso gastar”</h4><p class="muted">Sem limite por área, qualquer imprevisto vira dívida.</p></div>
+        <div class="card"><h4>Culpa e estresse</h4><p class="muted">Você trabalha, recebe… e ainda sente que não avança.</p></div>
+      </div>
+      <div style="margin-top:18px"><a class="btn" data-utm-append href="https://pay.cakto.com.br/SEU-LINK">Chega. Quero clareza agora</a></div>
+    </div>
+  </section>
+
+  <!-- OFERTA / O QUE VOCÊ RECEBE -->
+  <section class="section">
+    <div class="container split">
+      <div>
+        <h2 class="h2">Você recebe a Planilha 2.0 + 5 aulas passo a passo</h2>
+        <ul class="list">
+          <li>⚡ Configuração em 10 minutos</li>
+          <li>🧩 Personalização por categorias e metas</li>
+          <li>👥 Modo Casal (quem gastou, em quê e quanto)</li>
+          <li>📱 Acesso no celular e no PC</li>
+          <li>🎥 Tutoriais gravados (5 aulas) para te guiar</li>
+          <li>♻️ Atualizações futuras da Planilha 2.0</li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn" data-utm-append href="https://pay.cakto.com.br/SEU-LINK">Comprar agora por R$ 37,97</a>
+          <span class="price-pill">🔒 Compra segura (Cakto) • Garantia 7 dias</span>
+        </div>
+      </div>
+      <div class="quote">
+        <h3 class="h2" style="font-size:22px;margin:0 0 8px">Pare de jogar contra você</h3>
+        <p class="muted">“Quem controla a informação, controla a decisão.” Com a Planilha 2.0, você tem <strong>números à vista</strong> e decide com segurança — sem adivinhação.</p>
+        <div class="quotes" style="margin-top:12px">
+          <blockquote class="quote">“Em duas semanas parei as brigas por dinheiro aqui em casa. Tudo ficou claro.”</blockquote>
+          <blockquote class="quote">“Descobri R$ 320/mês em gastos invisíveis. Só isso pagou a planilha dezenas de vezes.”</blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BÔNUS + ESCASSEZ -->
+  <section class="section" id="bonus">
+    <div class="container">
+      <h2 class="h2">Bônus de hoje (limitado)</h2>
+      <div class="cards">
+        <div class="card"><h4>Planilha Extra de Metas</h4><p class="muted">Defina metas (viagem, reserva, dívidas) e veja o avanço mês a mês.</p></div>
+        <div class="card"><h4>Guia Rápido “Corte sem Sofrer”</h4><p class="muted">Checklist de reduções inteligentes que não tiram seu lazer.</p></div>
+        <div class="card"><h4>Grupo de Suporte</h4><p class="muted">Acesso a um grupo fechado para dúvidas e dicas (vagas limitadas).</p></div>
+      </div>
+      <p class="note" style="margin-top:10px">⏳ Bônus aparecem apenas enquanto o contador estiver ativo.</p>
+      <div style="margin-top:16px"><a class="btn btn--green" data-utm-append href="https://pay.cakto.com.br/SEU-LINK">Garantir acesso com bônus</a></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section faq">
+    <div class="container">
+      <h2 class="h2">Perguntas frequentes</h2>
+      <div class="grid" style="gap:12px">
+        <details><summary>Funciona no celular?</summary><p>Sim. Você pode usar no Google Planilhas (Android/iOS) e no computador.</p></details>
+        <details><summary>Nunca usei planilha. Vou conseguir?</summary><p>Sim. As 5 aulas mostram tudo passo a passo. Em 10 minutos você configura.</p></details>
+        <details><summary>Tenho garantia?</summary><p>Sim. 7 dias para testar. Se não curtir, é só solicitar o reembolso.</p></details>
+        <details><summary>Posso usar com meu parceiro(a)?</summary><p>Sim. O modo casal mostra quem gastou, em quê e quanto — sem brigas.</p></details>
+      </div>
+      <div style="margin-top:18px"><a class="btn" data-utm-append href="https://pay.cakto.com.br/SEU-LINK">Quero começar agora</a></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap">
+      <div>© <span id="year"></span> Ufael Gestor • Planilha 2.0</div>
+      <div class="muted">Compra segura via Cakto • Suporte: suporte@ufaelgestor.com.br</div>
+    </div>
+  </footer>
+
+  <!-- JSON-LD / Product Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "Planilha 2.0 – Controle Financeiro",
+    "image": ["https://ufaelgestor.com.br/og-planilha2.jpg"],
+    "description": "Planilha simples para organizar finanças em 5 minutos por dia. Acesso imediato + 5 aulas + garantia 7 dias.",
+    "brand": {"@type":"Brand","name":"Ufael Gestor"},
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "BRL",
+      "price": "37.97",
+      "availability": "https://schema.org/InStock",
+      "url": "https://ufaelgestor.com.br/"
+    }
+  }
+  </script>
+
+  <script>
+    // Ano no rodapé
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Countdown simples até o fim do dia (23:59)
+    (function(){
+      const el = document.getElementById('countdown');
+      function tick(){
+        const now = new Date();
+        const end = new Date();
+        end.setHours(23,59,59,999);
+        const s = Math.max(0, Math.floor((end-now)/1000));
+        const h = String(Math.floor(s/3600)).padStart(2,'0');
+        const m = String(Math.floor((s%3600)/60)).padStart(2,'0');
+        const sec = String(s%60).padStart(2,'0');
+        el.textContent = `${h}:${m}:${sec}`;
+      }
+      tick(); setInterval(tick,1000);
+    })();
+
+    // Preservar UTM nos links de checkout: adiciona a query atual em todo link data-utm-append
+    (function(){
+      const qs = window.location.search; if(!qs) return; 
+      document.querySelectorAll('[data-utm-append]').forEach(a=>{
+        try{
+          const url = new URL(a.href);
+          const pageParams = new URLSearchParams(qs);
+          // Não sobrescreve se já existir no link
+          pageParams.forEach((v,k)=>{ if(!url.searchParams.has(k)) url.searchParams.set(k,v); });
+          a.href = url.toString();
+        }catch(e){}
+      });
+    })();
+
+    // Rolagem suave para âncoras
+    document.addEventListener('click', (e)=>{
+      const a = e.target.closest('a[href^="#"]');
+      if(a){ e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'}); }
+    });
+  </script>
+</body>
+</html>
