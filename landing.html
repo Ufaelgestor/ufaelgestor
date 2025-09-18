@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planilha 2.0 - Organização Financeira Simples</title>
+  <meta name="description" content="Descubra para onde vai seu dinheiro e faça sobrar usando a Planilha 2.0. Organize tudo em poucos minutos por dia." />
+  <meta property="og:title" content="Planilha 2.0 - Organização Financeira Simples" />
+  <meta property="og:description" content="Descubra para onde vai seu dinheiro e faça sobrar usando a Planilha 2.0." />
+  <meta property="og:type" content="product" />
+  <meta property="og:image" content="/imgs/mockup-hero.svg" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Planilha 2.0 - Organização Financeira Simples" />
+  <meta name="twitter:description" content="Descubra para onde vai seu dinheiro e faça sobrar usando a Planilha 2.0." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Product","name":"Planilha 2.0","description":"Planilha inteligente para organização financeira pessoal em poucos minutos por dia.","image":"/imgs/mockup-hero.svg","brand":{"@type":"Brand","name":"Ufael Gestor"},"offers":{"@type":"Offer","priceCurrency":"BRL","price":"37.97","availability":"https://schema.org/InStock"}}</script>
+  <script src="https://cdn.tailwindcss.com" referrerpolicy="no-referrer"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { poppins: ['Poppins','sans-serif'] },
+          colors: { brand:'#7a2cff', neon:'#00ff88', dark:'#0c0f1a', card:'#171a2b', muted:'#aeb3c7' },
+          boxShadow: { cta:'0 8px 32px rgba(122,44,255,0.25)', neon:'0 8px 32px rgba(0,255,136,0.25)' },
+          keyframes: { fadeIn:{'0%':{opacity:0},'100%':{opacity:1}}, slideUp:{'0%':{opacity:0,transform:'translateY(40px)'},'100%':{opacity:1,transform:'translateY(0)'}} },
+          animation: { fadeIn:'fadeIn 1s ease-out both', slideUp:'slideUp 1s cubic-bezier(.4,0,.2,1) both' }
+        }
+      }
+    };
+  </script>
+  <style>body{font-family:'Poppins',sans-serif;}html{scroll-behavior:smooth;}</style>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <!-- Consent / analytics placeholder será injetado via script após consent -->
+</head>
+<body class="bg-dark text-white min-h-screen flex flex-col antialiased">
+  <div id="consent-banner" style="position:fixed;inset:auto 0 0 0;display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between;background:#171a2b;border-top:1px solid #2a2f45;padding:14px 18px;font-size:.85rem;z-index:50">
+    <span>Usamos cookies para métricas anônimas e melhoria da experiência. Pode aceitar?</span>
+    <div style="display:flex;gap:8px">
+      <button id="consent-accept" style="background:#00ff88;color:#0c0f1a;font-weight:600;border:none;border-radius:8px;padding:8px 14px;cursor:pointer">Aceitar</button>
+      <button id="consent-deny" style="background:transparent;color:#fff;border:1px solid #2f3548;border-radius:8px;padding:8px 14px;cursor:pointer">Recusar</button>
+    </div>
+  </div>
+
+  <main id="principal" class="flex-1">
+    <!-- HERO -->
+    <section id="hero" class="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 bg-gradient-to-b from-dark to-card">
+      <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-12">
+        <div class="flex-1 animate-fadeIn">
+          <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-5">Pare de ver seu salário sumir.<br><span class="text-neon">Em 5 minutos por dia</span> descubra para onde vai o dinheiro e faça SOBRAR.</h1>
+          <p class="text-lg md:text-xl text-muted mb-7">A <strong>Planilha 2.0</strong> é simples, visual e funciona no celular e computador. Por apenas <span class="text-neon font-bold">R$ 37,97</span>.</p>
+          <a href="#checkout" data-utm-append id="cta-hero" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-neon to-brand shadow-neon hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-neon/70 focus:ring-offset-2 focus:ring-offset-dark">Quero minha planilha</a>
+          <p class="text-sm text-muted mt-3">Acesso imediato • Garantia 7 dias</p>
+        </div>
+        <div class="flex-1 flex justify-center animate-slideUp">
+          <picture>
+            <source srcset="/imgs/mockup-hero.svg" type="image/svg+xml" />
+            <img src="/imgs/mockup-hero.svg" alt="Interface da Planilha 2.0 mostrando categorias e gráficos" class="rounded-2xl shadow-xl w-full max-w-sm" width="480" height="340" decoding="async" />
+          </picture>
+        </div>
+      </div>
+    </section>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Planilha 2.0 - Organização Financeira Simples</title>
+        <meta name="description" content="Descubra para onde vai seu dinheiro e faça sobrar usando a Planilha 2.0. Organize tudo em poucos minutos por dia." />
+        <meta property="og:title" content="Planilha 2.0 - Organização Financeira Simples" />
+        <meta property="og:description" content="Descubra para onde vai seu dinheiro e faça sobrar usando a Planilha 2.0." />
+        <meta property="og:type" content="product" />
+        <meta property="og:image" content="/imgs/mockup-hero.svg" />
+        <meta property="og:locale" content="pt_BR" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Planilha 2.0 - Organização Financeira Simples" />
+        <meta name="twitter:description" content="Descubra para onde vai seu dinheiro e faça sobrar usando a Planilha 2.0." />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+        <script src="https://cdn.tailwindcss.com" referrerpolicy="no-referrer"></script>
+        <script>
+          tailwind.config = {
+            theme: {
+              extend: {
+                fontFamily: { poppins: ['Poppins', 'sans-serif'] },
+                colors: {
+                  brand: '#7a2cff',
+                  neon: '#00ff88',
+                  dark: '#0c0f1a',
+                  card: '#171a2b',
+                  muted: '#aeb3c7'
+                },
+                boxShadow: {
+                  cta: '0 8px 32px rgba(122,44,255,0.25)',
+                  neon: '0 8px 32px rgba(0,255,136,0.25)'
+                },
+                keyframes: {
+                  fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
+                  slideUp: { '0%': { opacity: 0, transform: 'translateY(40px)' }, '100%': { opacity: 1, transform: 'translateY(0)' } }
+                },
+                animation: {
+                  fadeIn: 'fadeIn 1s ease-out both',
+                  slideUp: 'slideUp 1s cubic-bezier(.4,0,.2,1) both'
+                }
+              }
+            }
+          };
+        </script>
+        <style>
+          body { font-family: 'Poppins', sans-serif; }
+          html { scroll-behavior: smooth; }
+        </style>
+      </head>
+      <body class="bg-dark text-white min-h-screen flex flex-col antialiased">
+
+        <!-- HERO -->
+        <section id="hero" class="relative overflow-hidden pt-12 pb-16 md:pt-20 md:pb-24 bg-gradient-to-b from-dark to-card">
+          <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center gap-12">
+            <div class="flex-1 animate-fadeIn">
+              <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-5">
+                Pare de ver seu salário sumir.<br />
+                <span class="text-neon">Em 5 minutos por dia</span> descubra para onde vai o dinheiro e faça SOBRAR.
+              </h1>
+              <p class="text-lg md:text-xl text-muted mb-7">A <strong>Planilha 2.0</strong> é simples, visual e funciona no celular e computador. Por apenas <span class="text-neon font-bold">R$ 37,97</span>.</p>
+              <a href="#checkout" data-utm-append id="cta-hero" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-neon to-brand shadow-neon hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-neon/70 focus:ring-offset-2 focus:ring-offset-dark">
+                Quero minha planilha
+              </a>
+              <p class="text-sm text-muted mt-3">Acesso imediato • Garantia 7 dias</p>
+            </div>
+            <div class="flex-1 flex justify-center animate-slideUp">
+              <picture>
+                <source srcset="/imgs/mockup-hero.svg" type="image/svg+xml" />
+                <img src="/imgs/mockup-hero.svg" alt="Interface da Planilha 2.0 mostrando categorias e gráficos" class="rounded-2xl shadow-xl w-full max-w-sm" width="480" height="340" decoding="async" />
+              </picture>
+            </div>
+          </div>
+        </section>
+
+        <!-- BENEFÍCIOS -->
+        <section id="beneficios" class="py-14 md:py-20 bg-card">
+          <div class="max-w-5xl mx-auto px-5">
+            <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">Por que escolher a Planilha 2.0?</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+              <div class="bg-dark rounded-xl p-6 flex flex-col items-center text-center shadow-md animate-fadeIn" style="animation-delay:0.05s">
+                <svg class="w-8 h-8 mb-3 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="font-semibold mb-1">Clareza total</div>
+                <p class="text-muted text-sm">Veja para onde vai cada centavo do seu dinheiro.</p>
+              </div>
+              <div class="bg-dark rounded-xl p-6 flex flex-col items-center text-center shadow-md animate-fadeIn" style="animation-delay:0.1s">
+                <svg class="w-8 h-8 mb-3 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="font-semibold mb-1">Fácil de usar</div>
+                <p class="text-muted text-sm">Pronta para usar no celular ou computador.</p>
+              </div>
+              <div class="bg-dark rounded-xl p-6 flex flex-col items-center text-center shadow-md animate-fadeIn" style="animation-delay:0.15s">
+                <svg class="w-8 h-8 mb-3 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 8v4l3 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="font-semibold mb-1">Resultados rápidos</div>
+                  <p class="text-muted text-sm">Em poucos minutos por dia você já sente diferença.</p>
+              </div>
+              <div class="bg-dark rounded-xl p-6 flex flex-col items-center text-center shadow-md animate-fadeIn" style="animation-delay:0.2s">
+                <svg class="w-8 h-8 mb-3 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <div class="font-semibold mb-1">Pagamento seguro</div>
+                <p class="text-muted text-sm">Compra protegida e garantia de 7 dias.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- DEPOIMENTOS -->
+        <section id="depoimentos" class="py-14 md:py-20 bg-dark">
+          <div class="max-w-5xl mx-auto px-5">
+            <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">O que dizem nossos clientes</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="bg-card rounded-xl p-6 flex flex-col items-center text-center shadow-md animate-slideUp">
+                <img src="/imgs/user1.svg" alt="Avatar ilustrado de cliente Ana Paula" class="w-16 h-16 rounded-full mb-3 object-cover" loading="lazy" width="64" height="64" decoding="async" />
+                <span class="text-neon mb-2" aria-label="5 de 5 estrelas" role="img">★★★★★</span>
+                <div class="font-semibold mb-1">Ana Paula</div>
+                <p class="text-muted text-sm">“Em duas semanas parei as brigas por dinheiro aqui em casa. Tudo ficou claro.”</p>
+              </div>
+              <div class="bg-card rounded-xl p-6 flex flex-col items-center text-center shadow-md animate-slideUp" style="animation-delay:0.1s">
+                <img src="/imgs/user2.svg" alt="Avatar ilustrado de cliente Carlos Silva" class="w-16 h-16 rounded-full mb-3 object-cover" loading="lazy" width="64" height="64" decoding="async" />
+                <span class="text-neon mb-2" aria-label="5 de 5 estrelas" role="img">★★★★★</span>
+                <div class="font-semibold mb-1">Carlos Silva</div>
+                <p class="text-muted text-sm">“Descobri R$ 320/mês em gastos invisíveis. Só isso pagou a planilha dezenas de vezes.”</p>
+              </div>
+              <div class="bg-card rounded-xl p-6 flex flex-col items-center text-center shadow-md animate-slideUp" style="animation-delay:0.2s">
+                <img src="/imgs/user3.svg" alt="Avatar ilustrado de cliente Juliana M." class="w-16 h-16 rounded-full mb-3 object-cover" loading="lazy" width="64" height="64" decoding="async" />
+                <span class="text-neon mb-2" aria-label="5 de 5 estrelas" role="img">★★★★★</span>
+                <div class="font-semibold mb-1">Juliana M.</div>
+                <p class="text-muted text-sm">“Simples, rápida e mudou minha relação com o dinheiro!”</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- COMO FUNCIONA -->
+        <section id="como-funciona" class="py-14 md:py-20 bg-card">
+          <div class="max-w-5xl mx-auto px-5">
+            <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">Como funciona?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div class="flex flex-col items-center text-center animate-fadeIn" style="animation-delay:0.05s">
+                <div class="bg-dark rounded-full w-16 h-16 flex items-center justify-center mb-3"><svg class="w-8 h-8 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 4v16m8-8H4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="font-semibold mb-1">1. Comprar</div>
+                <p class="text-muted text-sm">Clique no botão e faça o pagamento seguro.</p>
+              </div>
+              <div class="flex flex-col items-center text-center animate-fadeIn" style="animation-delay:0.1s">
+                <div class="bg-dark rounded-full w-16 h-16 flex items-center justify-center mb-3"><svg class="w-8 h-8 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2M7 9l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="font-semibold mb-1">2. Baixar</div>
+                <p class="text-muted text-sm">Receba o acesso imediato no seu e-mail.</p>
+              </div>
+              <div class="flex flex-col items-center text-center animate-fadeIn" style="animation-delay:0.15s">
+                <div class="bg-dark rounded-full w-16 h-16 flex items-center justify-center mb-3"><svg class="w-8 h-8 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <div class="font-semibold mb-1">3. Usar</div>
+                <p class="text-muted text-sm">Comece a organizar suas finanças e veja a diferença.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- OFERTA / CHECKOUT -->
+        <section id="checkout" class="py-14 md:py-20 bg-dark">
+          <div class="max-w-3xl mx-auto px-5 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Oferta especial: Planilha 2.0 + Bônus</h2>
+            <div class="text-4xl font-bold text-neon mb-2">R$ 37,97</div>
+            <p class="text-muted mb-6">Acesso imediato + Garantia de <span class="font-semibold">7 dias</span></p>
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-6">
+              <a href="https://pay.cakto.com.br/SEU-LINK" data-utm-append id="cta-checkout" target="_blank" rel="nofollow noopener" class="px-8 py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-neon to-brand shadow-neon hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-neon/70 focus:ring-offset-2 focus:ring-offset-dark">Quero comprar agora</a>
+              <div class="flex items-center gap-2 text-muted text-sm"><svg class="w-5 h-5 text-neon" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/></svg>Compra segura</div>
+            </div>
+            <div class="mb-5">
+              <span class="inline-block bg-card px-4 py-2 rounded-lg text-neon font-semibold">Bônus expira em <span id="countdown" class="font-bold" aria-live="polite">23:59</span></span>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+              <div class="bg-card rounded-xl p-5 flex flex-col items-center animate-slideUp">
+                <img src="/imgs/bonus-metas.svg" alt="Ilustração da planilha extra de metas" class="w-24 h-auto mb-2" width="96" height="70" loading="lazy" decoding="async" />
+                <div class="font-semibold mb-1">Planilha Extra de Metas</div>
+                <p class="text-muted text-sm">Defina metas e acompanhe o avanço mês a mês.</p>
+              </div>
+              <div class="bg-card rounded-xl p-5 flex flex-col items-center animate-slideUp" style="animation-delay:0.1s">
+                <img src="/imgs/bonus-guia.svg" alt="Ilustração do guia rápido de cortes inteligentes" class="w-24 h-auto mb-2" width="96" height="70" loading="lazy" decoding="async" />
+                <div class="font-semibold mb-1">Guia “Corte sem Sofrer”</div>
+                <p class="text-muted text-sm">Checklist de reduções inteligentes sem abrir mão do lazer.</p>
+              </div>
+              <div class="bg-card rounded-xl p-5 flex flex-col items-center animate-slideUp" style="animation-delay:0.2s">
+                <img src="/imgs/bonus-grupo.svg" alt="Ilustração de avatares conectados representando grupo de suporte" class="w-24 h-auto mb-2" width="96" height="70" loading="lazy" decoding="async" />
+                <div class="font-semibold mb-1">Grupo de Suporte</div>
+                <p class="text-muted text-sm">Tire dúvidas e compartilhe avanços.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PROVA EXTRA / SELOS -->
+        <section id="selos" class="py-14 md:py-20 bg-card">
+          <div class="max-w-5xl mx-auto px-5">
+            <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">Confiança e Segurança</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 items-start">
+              <div class="flex flex-col items-center text-center animate-fadeIn" style="animation-delay:0.05s">
+                <img src="/imgs/selo-garantia.svg" alt="Selo Garantia 7 dias" class="w-24 h-auto mb-3" width="96" height="96" loading="lazy" decoding="async" />
+                <p class="text-xs text-muted">Teste sem risco: 7 dias de garantia.</p>
+              </div>
+              <div class="flex flex-col items-center text-center animate-fadeIn" style="animation-delay:0.1s">
+                <img src="/imgs/selo-seguro.svg" alt="Selo Compra Segura" class="w-24 h-auto mb-3" width="96" height="96" loading="lazy" decoding="async" />
+                <p class="text-xs text-muted">Pagamento criptografado e protegido.</p>
+              </div>
+              <div class="flex flex-col items-center text-center animate-fadeIn" style="animation-delay:0.15s">
+                <img src="/imgs/dispositivos.svg" alt="Ícones de celular, tablet e computador" class="w-24 h-auto mb-3" width="96" height="96" loading="lazy" decoding="async" />
+                <p class="text-xs text-muted">Use no celular, tablet ou PC.</p>
+              </div>
+              <div class="flex flex-col items-center text-center animate-fadeIn" style="animation-delay:0.2s">
+                <img src="/imgs/estrelas.svg" alt="Avaliação 5 estrelas dos usuários" class="w-24 h-auto mb-3" width="96" height="96" loading="lazy" decoding="async" />
+                <p class="text-xs text-muted">Avaliação máxima dos usuários.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="py-14 md:py-20 bg-dark">
+          <div class="max-w-3xl mx-auto px-5">
+            <h2 class="text-2xl md:text-3xl font-bold mb-10 text-center">Perguntas frequentes</h2>
+            <div class="space-y-4" id="faq-list">
+              <div class="border border-card rounded-lg overflow-hidden">
+                <button class="w-full text-left px-6 py-4 bg-card focus:outline-none flex justify-between items-center faq-toggle">
+                  <span>Funciona no celular?</span>
+                  <svg class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div class="px-6 py-4 bg-dark hidden">Sim! Você pode usar no Google Planilhas (Android/iOS) e no computador.</div>
+              </div>
+              <div class="border border-card rounded-lg overflow-hidden">
+                <button class="w-full text-left px-6 py-4 bg-card focus:outline-none flex justify-between items-center faq-toggle">
+                  <span>Nunca usei planilha. Vou conseguir?</span>
+                  <svg class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div class="px-6 py-4 bg-dark hidden">Sim! As videoaulas mostram tudo passo a passo. Em poucos minutos você configura.</div>
+              </div>
+              <div class="border border-card rounded-lg overflow-hidden">
+                <button class="w-full text-left px-6 py-4 bg-card focus:outline-none flex justify-between items-center faq-toggle">
+                  <span>Tenho garantia?</span>
+                  <svg class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div class="px-6 py-4 bg-dark hidden">Sim! Você tem 7 dias para testar. Se não curtir, devolvemos seu dinheiro.</div>
+              </div>
+              <div class="border border-card rounded-lg overflow-hidden">
+                <button class="w-full text-left px-6 py-4 bg-card focus:outline-none flex justify-between items-center faq-toggle">
+                  <span>Posso usar com meu parceiro(a)?</span>
+                  <svg class="w-5 h-5 transition-transform duration-200" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+                </button>
+                <div class="px-6 py-4 bg-dark hidden">Sim! O modo compartilhado deixa claro quem gastou, quanto e em quê — sem brigas.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CTA FINAL -->
+        <section id="cta-final" class="py-14 md:py-20 bg-dark text-center">
+          <div class="max-w-2xl mx-auto px-5">
+            <h2 class="text-2xl md:text-3xl font-bold mb-5">Garanta sua tranquilidade financeira agora</h2>
+            <a href="https://pay.cakto.com.br/SEU-LINK" data-utm-append id="cta-final-btn" target="_blank" rel="nofollow noopener" class="px-8 py-4 rounded-xl font-bold text-lg bg-gradient-to-r from-neon to-brand shadow-neon hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-neon/70 focus:ring-offset-2 focus:ring-offset-dark">Quero minha planilha</a>
+            <p class="text-muted mt-3 text-sm">Oferta e bônus por tempo limitado</p>
+          </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-card py-8 mt-auto">
+          <div class="max-w-5xl mx-auto px-5 flex flex-col md:flex-row justify-between items-center gap-4 text-muted text-sm">
+            <nav class="flex gap-5 mb-2 md:mb-0">
+              <a href="#" class="hover:underline" rel="nofollow">Política de Privacidade</a>
+              <a href="#" class="hover:underline" rel="nofollow">Termos</a>
+              <a href="mailto:suporte@ufaelgestor.com.br" class="hover:underline">Contato</a>
+            </nav>
+            <div>© <span id="year"></span> Ufael Gestor • Planilha 2.0</div>
+          </div>
+        </footer>
+
+        <!-- SCRIPTS -->
+        <script>
+          // Ano automático
+          (function(){
+            const yEl = document.getElementById('year');
+            if (yEl) yEl.textContent = new Date().getFullYear();
+          })();
+
+          // Contador regressivo até 23:59 (fuso local)
+          (function(){
+            const el = document.getElementById('countdown');
+            if(!el) return;
+            function tick(){
+              const now = new Date();
+              const end = new Date();
+              end.setHours(23,59,59,999);
+              const diff = Math.max(0, end - now);
+              const s = Math.floor(diff/1000);
+              const h = String(Math.floor(s/3600)).padStart(2,'0');
+              const m = String(Math.floor((s%3600)/60)).padStart(2,'0');
+              const sec = String(s%60).padStart(2,'0');
+              el.textContent = `${h}:${m}:${sec}`;
+            }
+            tick();
+            const id = setInterval(tick,1000);
+            window.addEventListener('beforeunload',()=>clearInterval(id));
+          })();
+
+          // FAQ acessível (um aberto por vez)
+          (function(){
+            document.querySelectorAll('.faq-toggle').forEach(btn => {
+              const content = btn.parentElement.nextElementSibling;
+              btn.setAttribute('aria-expanded','false');
+              if(content){
+                content.id = content.id || 'faq-panel-'+Math.random().toString(36).slice(2);
+                btn.setAttribute('aria-controls', content.id);
+                content.setAttribute('role','region');
+                content.setAttribute('aria-hidden','true');
+              }
+              btn.addEventListener('click', () => {
+                const open = btn.getAttribute('aria-expanded') === 'true';
+                  document.querySelectorAll('.faq-toggle[aria-expanded="true"]').forEach(other => {
+                    if(other!==btn){
+                      other.setAttribute('aria-expanded','false');
+                      const panel = document.getElementById(other.getAttribute('aria-controls'));
+                      if(panel){ panel.classList.add('hidden'); panel.setAttribute('aria-hidden','true'); }
+                      const ic = other.querySelector('svg'); if(ic) ic.style.transform='';
+                    }
+                  });
+                if(!open){
+                  btn.setAttribute('aria-expanded','true');
+                  if(content){ content.classList.remove('hidden'); content.setAttribute('aria-hidden','false'); }
+                  const ic = btn.querySelector('svg'); if(ic) ic.style.transform='rotate(180deg)';
+                } else {
+                  btn.setAttribute('aria-expanded','false');
+                  if(content){ content.classList.add('hidden'); content.setAttribute('aria-hidden','true'); }
+                  const ic = btn.querySelector('svg'); if(ic) ic.style.transform='';
+                }
+              });
+            });
+          })();
+
+          // Rolagem suave (fallback simples se prefer-reduced-motion)
+          document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+              const id = a.getAttribute('href');
+              if(id.length > 1){
+                const target = document.querySelector(id);
+                if(target){
+                  e.preventDefault();
+                  target.scrollIntoView({behavior:'smooth'});
+                }
+              }
+            });
+          });
+
+          // Propagar UTM
+          (function(){
+            const qs = window.location.search; if(!qs) return;
+            document.querySelectorAll('[data-utm-append]').forEach(a=>{
+              try {
+                const url = new URL(a.href);
+                const params = new URLSearchParams(qs);
+                  params.forEach((v,k)=>{ if(!url.searchParams.has(k)) url.searchParams.set(k,v); });
+                a.href = url.toString();
+              } catch(e) {}
+            });
+          })();
+
+          // Animações on-scroll
+          (function(){
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const animated = document.querySelectorAll('.animate-fadeIn, .animate-slideUp');
+            animated.forEach(el => {
+              if(prefersReduced){
+                el.style.animation = 'none';
+              } else {
+                el.style.animationPlayState = 'paused';
+              }
+            });
+            if(prefersReduced) return;
+            const io = new IntersectionObserver(entries => {
+              entries.forEach(entry => {
+                if(entry.isIntersecting){
+                  entry.target.style.animationPlayState='running';
+                  io.unobserve(entry.target);
+                }
+              });
+            }, { threshold: 0.15 });
+            animated.forEach(el => io.observe(el));
+          })();
+
+          (function(){
+            const KEY='pg_consent_v1';
+            const stored=localStorage.getItem(KEY);
+            const banner=document.getElementById('consent-banner');
+            function loadAnalytics(){
+              // GA placeholder
+              const g=document.createElement('script');
+              g.async=true; g.src='https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX';
+              document.head.appendChild(g);
+              const inline=document.createElement('script');
+              inline.textContent="window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config','G-XXXXXXX',{anonymize_ip:true});";
+              document.head.appendChild(inline);
+            }
+            if(stored==='accepted'){ banner.remove(); loadAnalytics(); }
+            if(stored==='denied'){ banner.remove(); }
+            document.getElementById('consent-accept').addEventListener('click',()=>{localStorage.setItem(KEY,'accepted');loadAnalytics();banner.remove();});
+            document.getElementById('consent-deny').addEventListener('click',()=>{localStorage.setItem(KEY,'denied');banner.remove();});
+          })();
+        </script>
+      </body>
+      </html>
