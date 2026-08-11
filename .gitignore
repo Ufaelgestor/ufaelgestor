@@ -1,0 +1,4 @@
+# Skills instaladas localmente via `npx skills add` (tooling de agente, não conteúdo do projeto)
+.agents/
+.claude/
+skills-lock.json
