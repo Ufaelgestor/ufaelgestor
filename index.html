@@ -777,104 +777,21 @@
 
     </div>
 
-    <!-- Motion: loader, progresso de leitura, entrada ao rolar e skeleton de imagem -->
+    <!-- Observabilidade: preencha o DSN/endpoint reais para ativar (valores públicos de
+         cliente — DSN do Sentry e endpoint OTLP não são segredos, ok expor no navegador).
+         Deixe em branco para manter tudo desativado (no-op, sem chamadas de rede extra).
+         Ver README.md para instruções. -->
     <script>
-    (function () {
-        var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-        // --- Loader inicial (skeleton + progresso de carregamento) ---
-        var loader = document.getElementById('page-loader');
-        function hideLoader() {
-            if (!loader || !loader.parentNode) return;
-            loader.classList.add('page-loader--hidden');
-            loader.addEventListener('transitionend', function onEnd() {
-                loader.removeEventListener('transitionend', onEnd);
-                if (loader.parentNode) loader.remove();
-            });
-            // Fallback caso transitionend não dispare (ex.: reduced motion, aba em segundo plano)
-            setTimeout(function () {
-                if (loader.parentNode) loader.remove();
-            }, 700);
-        }
-        if (document.readyState === 'complete') {
-            hideLoader();
-        } else {
-            window.addEventListener('load', hideLoader);
-        }
-
-        // --- Barra de progresso de leitura da página ---
-        var progressBar = document.getElementById('scroll-progress');
-        function updateProgress() {
-            if (!progressBar) return;
-            var doc = document.documentElement;
-            var scrollTop = window.scrollY || doc.scrollTop;
-            var scrollHeight = doc.scrollHeight - doc.clientHeight;
-            var progress = scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 0;
-            progressBar.style.transform = 'scaleX(' + progress + ')';
-        }
-        var progressTicking = false;
-        window.addEventListener('scroll', function () {
-            if (!progressTicking) {
-                window.requestAnimationFrame(function () {
-                    updateProgress();
-                    progressTicking = false;
-                });
-                progressTicking = true;
-            }
-        }, { passive: true });
-        updateProgress();
-
-        // --- Entrada do Hero (acima da dobra) assim que o loader some ---
-        var heroEls = document.querySelectorAll('.hero-reveal');
-        function revealHero() {
-            heroEls.forEach(function (el) { el.classList.add('in-view'); });
-        }
-        if (prefersReducedMotion) {
-            revealHero();
-        } else if (document.readyState === 'complete') {
-            window.requestAnimationFrame(revealHero);
-        } else {
-            window.addEventListener('load', function () {
-                window.requestAnimationFrame(revealHero);
-            });
-        }
-
-        // --- Entrada ao rolar (scroll reveal) para o restante da página ---
-        var revealEls = document.querySelectorAll('.reveal:not(.hero-reveal), .reveal-fade:not(.hero-reveal), .reveal-sm:not(.hero-reveal)');
-        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
-            revealEls.forEach(function (el) { el.classList.add('in-view'); });
-        } else {
-            var observer = new IntersectionObserver(function (entries) {
-                entries.forEach(function (entry) {
-                    if (!entry.isIntersecting) return;
-                    var el = entry.target;
-                    el.style.willChange = 'transform, opacity, filter';
-                    el.classList.add('in-view');
-                    el.addEventListener('transitionend', function onEnd() {
-                        el.removeEventListener('transitionend', onEnd);
-                        el.style.willChange = '';
-                    });
-                    observer.unobserve(el);
-                });
-            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-            revealEls.forEach(function (el) { observer.observe(el); });
-        }
-
-        // --- Skeleton + lazy loading da foto de perfil ---
-        document.querySelectorAll('.img-skeleton img').forEach(function (img) {
-            var wrapper = img.closest('.img-skeleton');
-            function markLoaded() {
-                if (wrapper) wrapper.classList.add('img-skeleton--loaded');
-            }
-            if (img.complete && img.naturalWidth > 0) {
-                markLoaded();
-            } else {
-                img.addEventListener('load', markLoaded);
-                img.addEventListener('error', markLoaded);
-            }
-        });
-    })();
+        window.__OBSERVABILITY_CONFIG__ = {
+            sentryDsn: '',        // ex.: 'https://examplePublicKey@o0.ingest.sentry.io/0'
+            environment: 'production',
+            otelExporterUrl: ''   // ex.: 'https://collector.exemplo.com/v1/traces'
+        };
     </script>
+    <script src="https://browser.sentry-cdn.com/8.36.0/bundle.min.js" crossorigin="anonymous"></script>
+
+    <!-- Motion, observabilidade: bootstrap único (ver src/main.js) -->
+    <script type="module" src="./src/main.js"></script>
 
 </body>
 </html>
