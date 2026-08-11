@@ -1,0 +1,14 @@
+# Skills instaladas localmente via `npx skills add` (tooling de agente, não conteúdo do projeto)
+.agents/
+.claude/
+skills-lock.json
+
+# Node
+node_modules/
+
+# Relatórios e artefatos de teste
+coverage/
+playwright-report/
+test-results/
+.stryker-tmp/
+reports/

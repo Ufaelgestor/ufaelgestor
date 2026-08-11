@@ -1,0 +1,20 @@
+{
+  "$schema": "./node_modules/@stryker-mutator/core/schema/stryker-schema.json",
+  "packageManager": "npm",
+  "testRunner": "vitest",
+  "reporters": ["html", "clear-text", "progress"],
+  "coverageAnalysis": "perTest",
+  "mutate": ["src/motion.js", "src/observability.js", "!src/main.js"],
+  "files": [
+    "src/**/*.js",
+    "tests/unit/**/*.js",
+    "package.json",
+    "package-lock.json",
+    "vitest.config.js"
+  ],
+  "thresholds": {
+    "high": 80,
+    "low": 60,
+    "break": 50
+  }
+}
