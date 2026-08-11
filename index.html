@@ -51,7 +51,7 @@
             font-weight: 700;
             font-size: 1.125rem; /* 18px */
             line-height: 1.5rem; /* 24px */
-            transition: all 0.3s ease;
+            transition: all 0.3s var(--ease-out-custom);
             text-decoration: none;
             background-color: #25D366;
             color: #0B0B0B;
@@ -70,7 +70,7 @@
             border-radius: 0.5rem;
             font-weight: 600;
             font-size: 1rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s var(--ease-out-custom);
             text-decoration: none;
             background-color: #6B4CFF;
             color: #FFFFFF;
@@ -102,9 +102,186 @@
             margin-left: auto;
             margin-right: auto;
         }
+
+        /* ===== Motion: fundação (easing, entrada/saída, skeleton, progresso) ===== */
+        :root {
+            --ease-out-custom: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-in-custom: cubic-bezier(0.7, 0, 0.84, 0);
+        }
+
+        /* Loader inicial de página: skeleton + progresso + saída suave */
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            background-color: #0B0B0B;
+            transition: opacity 0.5s var(--ease-out-custom), filter 0.5s var(--ease-out-custom);
+        }
+        #page-loader.page-loader--hidden {
+            opacity: 0;
+            filter: blur(4px);
+            pointer-events: none;
+        }
+        #page-loader .loader-mark {
+            font-weight: 800;
+            font-size: 1.5rem;
+            letter-spacing: -0.02em;
+            color: #FFFFFF;
+        }
+        #page-loader .loader-track {
+            width: 12rem;
+            height: 3px;
+            border-radius: 999px;
+            background-color: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+        }
+        #page-loader .loader-bar {
+            height: 100%;
+            width: 40%;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #6B4CFF, #34F1FF);
+            transform: translateX(-100%);
+            animation: loader-indeterminate 1.1s var(--ease-out-custom) infinite;
+        }
+        @keyframes loader-indeterminate {
+            0% { transform: translateX(-100%); }
+            60% { transform: translateX(160%); }
+            100% { transform: translateX(160%); }
+        }
+
+        /* Barra de progresso de leitura da página */
+        #scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 100%;
+            z-index: 60;
+            background: linear-gradient(90deg, #6B4CFF, #34F1FF);
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            transition: transform 100ms linear;
+        }
+
+        /* Entrada ao rolar (scroll reveal) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            filter: blur(4px);
+            transition: opacity 0.45s var(--ease-out-custom), transform 0.45s var(--ease-out-custom), filter 0.45s var(--ease-out-custom);
+            transition-delay: calc(min(var(--i, 0), 6) * 70ms);
+        }
+        .reveal.in-view {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+        /* Variante sem transform: usada em elementos que já têm scale/transform próprio (ex.: card em destaque) */
+        .reveal-fade {
+            opacity: 0;
+            filter: blur(4px);
+            transition: opacity 0.45s var(--ease-out-custom), filter 0.45s var(--ease-out-custom);
+            transition-delay: calc(min(var(--i, 0), 6) * 70ms);
+        }
+        .reveal-fade.in-view {
+            opacity: 1;
+            filter: blur(0);
+        }
+        /* Variante rápida para elementos pequenos (ex.: pílulas de ferramentas) — elementos menores animam mais rápido */
+        .reveal-sm {
+            opacity: 0;
+            transform: translateY(10px);
+            filter: blur(2px);
+            transition: opacity 0.3s var(--ease-out-custom), transform 0.3s var(--ease-out-custom), filter 0.3s var(--ease-out-custom);
+            transition-delay: calc(min(var(--i, 0), 8) * 35ms);
+        }
+        .reveal-sm.in-view {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        /* Skeleton de imagem com efeito shimmer enquanto carrega (lazy loading) */
+        .img-skeleton {
+            position: relative;
+            overflow: hidden;
+            background-color: #1a1a1a;
+        }
+        .img-skeleton::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.08) 50%, transparent 70%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        .img-skeleton.img-skeleton--loaded::before {
+            content: none;
+        }
+        .img-skeleton img {
+            opacity: 0;
+            filter: blur(8px);
+            transition: opacity 0.5s var(--ease-out-custom), filter 0.5s var(--ease-out-custom);
+        }
+        .img-skeleton.img-skeleton--loaded img {
+            opacity: 1;
+            filter: blur(0);
+        }
+        @keyframes skeleton-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Feedback de pressão nos CTAs (baixa frequência de clique = motion permitido) */
+        .cta-button:active,
+        .cta-button-secondary:active {
+            transform: scale(0.97);
+        }
+
+        /* Acessibilidade: respeita preferência de movimento reduzido */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal,
+            .reveal-fade,
+            .reveal-sm {
+                opacity: 1;
+                transform: none;
+                filter: none;
+            }
+            .img-skeleton img {
+                opacity: 1;
+                filter: none;
+            }
+            #scroll-progress {
+                transition: none;
+            }
+        }
     </style>
 </head>
 <body class="bg-deep-black text-white">
+
+    <!-- Loader inicial: skeleton + progresso de carregamento -->
+    <div id="page-loader" aria-hidden="true">
+        <div class="loader-mark">Ufaelgestor</div>
+        <div class="loader-track">
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Barra de progresso de leitura -->
+    <div id="scroll-progress"></div>
 
     <!-- Wrapper da Página -->
     <div class="overflow-x-hidden">
@@ -112,16 +289,16 @@
         <!-- 1. SEÇÃO HERO -->
     <section class="relative flex items-center justify-center min-h-screen px-6 py-24 text-center bg-gradient-to-b from-deep-black via-deep-black to-imperial-purple/10">
         <div class="z-10 max-w-4xl mx-auto">
-            <h1 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
+            <h1 class="reveal hero-reveal text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl" style="--i:0">
                     Eu ajudo empresas a venderem melhor com estratégia, dados e clareza operacional.
                 </h1>
-                <p class="max-w-2xl mx-auto mt-6 text-lg text-gray-300 md:text-xl">
+                <p class="reveal hero-reveal max-w-2xl mx-auto mt-6 text-lg text-gray-300 md:text-xl" style="--i:1">
                     Sem promessas milagrosas. Marketing é estrutura, análise e consistência — e eu entrego exatamente isso.
                 </p>
-                <div class="mt-8 text-lg font-medium text-gray-400">
+                <div class="reveal hero-reveal mt-8 text-lg font-medium text-gray-400" style="--i:2">
                     Rafael Oliveira — Ufaelgestor
                 </div>
-                <div class="mt-12">
+                <div class="reveal hero-reveal mt-12" style="--i:3">
                     <a href="https://wa.me/5562992234028?text=Ol%C3%A1%2C%20Rafael!%20Vi%20seu%20site%20e%20gostaria%20de%20falar%20sobre%20meu%20neg%C3%B3cio." target="_blank" class="cta-button">
                         <!-- Ícone de Seta (substituindo o emoji) -->
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
@@ -135,7 +312,7 @@
     <section class="py-20 md:py-24 bg-white text-gray-900">
         <div class="container max-w-6xl px-6 mx-auto">
             <div class="grid items-center gap-12 md:grid-cols-2 lg:gap-24">
-                    <div class="order-2 md:order-1">
+                    <div class="reveal order-2 md:order-1" style="--i:0">
                         <span class="text-sm font-bold tracking-widest uppercase text-imperial-purple"></span>
                         <h2 class="mt-3 text-2xl font-bold tracking-tight md:text-3xl">
                             Da Desorganização à Clareza
@@ -150,7 +327,7 @@
                         </div>
                     </div>
                     <!-- Placeholder Visual Profissional -->
-                    <div class="order-1 md:order-2">
+                    <div class="reveal order-1 md:order-2" style="--i:1">
                         <div class="w-full h-80 md:h-96 bg-gray-100 rounded-2xl border border-imperial-purple/30 flex items-center justify-center p-8">
                             <!-- Ícone Minimalista de Estratégia -->
                             <svg class="w-24 h-24 text-imperial-purple/70" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor">
@@ -167,40 +344,40 @@
     <!-- 3. O que Diferencia o Ufaelgestor (TEMA CLARO) -->
     <section class="py-20 md:py-24 bg-gray-50 text-gray-900">
         <div class="container max-w-6xl px-6 mx-auto">
-            <h2 class="section-title">O que Diferencia o Ufaelgestor</h2>
-                <p class="section-subtitle text-gray-600">
+            <h2 class="reveal section-title" style="--i:0">O que Diferencia o Ufaelgestor</h2>
+                <p class="reveal section-subtitle text-gray-600" style="--i:1">
                     Foco em maturidade operacional, não em promessas vazias.
                 </p>
 
                 <div class="max-w-4xl mx-auto mt-16">
                     <ul class="space-y-6 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-12 md:gap-y-8">
                         <!-- Item 1 -->
-                        <li class="flex items-start gap-4">
+                        <li class="reveal flex items-start gap-4" style="--i:0">
                             <svg class="flex-shrink-0 w-6 h-6 mt-1 text-neon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span class="text-lg text-gray-700">Organização e clareza operacional</span>
                         </li>
                         <!-- Item 2 -->
-                        <li class="flex items-start gap-4">
+                        <li class="reveal flex items-start gap-4" style="--i:1">
                             <svg class="flex-shrink-0 w-6 h-6 mt-1 text-neon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span class="text-lg text-gray-700">Estratégias baseadas em dados (não em "achismo")</span>
                         </li>
                         <!-- Item 3 -->
-                        <li class="flex items-start gap-4">
+                        <li class="reveal flex items-start gap-4" style="--i:2">
                             <svg class="flex-shrink-0 w-6 h-6 mt-1 text-neon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span class="text-lg text-gray-700">Acompanhamento real e contínuo</span>
                         </li>
                         <!-- Item 4 -->
-                        <li class="flex items-start gap-4">
+                        <li class="reveal flex items-start gap-4" style="--i:3">
                             <svg class="flex-shrink-0 w-6 h-6 mt-1 text-neon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span class="text-lg text-gray-700">Diagnóstico preciso de gargalos</span>
                         </li>
                         <!-- Item 5 -->
-                        <li class="flex items-start gap-4">
+                        <li class="reveal flex items-start gap-4" style="--i:4">
                             <svg class="flex-shrink-0 w-6 h-6 mt-1 text-neon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span class="text-lg text-gray-700">Estrutura técnica sólida (GTM, GA4, CAPI)</span>
                         </li>
                         <!-- Item 6 -->
-                        <li class="flex items-start gap-4">
+                        <li class="reveal flex items-start gap-4" style="--i:5">
                             <svg class="flex-shrink-0 w-6 h-6 mt-1 text-neon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                             <span class="text-lg text-gray-700">Foco em resultados sustentáveis, não milagrosos</span>
                         </li>
@@ -212,49 +389,49 @@
     <!-- 4. Serviços Oferecidos (TEMA CLARO) -->
     <section class="py-20 md:py-24 bg-white text-gray-900">
         <div class="container max-w-6xl px-6 mx-auto">
-            <h2 class="section-title">Serviços: Organização, Estratégia e Execução</h2>
-                <p class="section-subtitle text-gray-600">
+            <h2 class="reveal section-title" style="--i:0">Serviços: Organização, Estratégia e Execução</h2>
+                <p class="reveal section-subtitle text-gray-600" style="--i:1">
                     Um ecossistema completo para profissionalizar seu marketing digital e permitir tomadas de decisão baseadas em fatos.
                 </p>
 
                 <div class="grid grid-cols-1 gap-8 mt-20 md:grid-cols-2 lg:grid-cols-3">
                     <!-- Serviço 1: Gestão de Tráfego -->
-                    <div class="flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm">
+                    <div class="reveal flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm" style="--i:0">
                         <svg class="w-10 h-10 text-imperial-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 1 0 7.5 7.5h-7.5V6Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0 0 13.5 3v7.5Z" /></svg>
                         <h3 class="mt-5 text-2xl font-semibold">Gestão de Tráfego Profissional</h3>
                         <p class="mt-3 text-gray-600">Execução estratégica em Meta Ads, Google Ads e TikTok Ads. Foco em performance alinhada aos objetivos do negócio.</p>
                     </div>
 
                     <!-- Serviço 2: Rastreamento -->
-                    <div class="flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm">
+                    <div class="reveal flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm" style="--i:1">
                          <svg class="w-10 h-10 text-imperial-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5" /></svg>
                         <h3 class="mt-5 text-2xl font-semibold">Rastreamento e Landing Pages</h3>
                         <p class="mt-3 text-gray-600">Implementação completa de Pixel, GA4, GTM e CAPI. Criação e otimização de Landing Pages que convertem.</p>
                     </div>
 
                     <!-- Serviço 3: Automação -->
-                    <div class="flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm">
+                    <div class="reveal flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm" style="--i:2">
                         <svg class="w-10 h-10 text-imperial-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12c0-1.232-.046-2.453-.138-3.662a4.006 4.006 0 0 0-3.7-3.7 48.678 48.678 0 0 0-7.324 0 4.006 4.006 0 0 0-3.7 3.7c-.092 1.21-.138 2.43-.138 3.662a4.006 4.006 0 0 0 3.7 3.7 48.657 48.657 0 0 0 7.324 0 4.006 4.006 0 0 0 3.7-3.7Zm-9.75 2.25h.008v.008H9.75v-.008Zm3 0h.008v.008H12.75v-.008Zm3 0h.008v.008H15.75v-.008Z" /></svg>
                         <h3 class="mt-5 text-2xl font-semibold">Automações e Funis</h3>
                         <p class="mt-3 text-gray-600">Desenvolvimento de funis de vendas, automações de WhatsApp e integração com CRM para organizar o fluxo de leads.</p>
                     </div>
-                    
+
                     <!-- Serviço 4: Análise -->
-                    <div class="flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm">
+                    <div class="reveal flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm" style="--i:3">
                          <svg class="w-10 h-10 text-imperial-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h12A2.25 2.25 0 0 0 20.25 14.25V3m-16.5 0h16.5m-16.5 0H3.75m16.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-12A2.25 2.25 0 0 1 3.75 14.25V3" /></svg>
                         <h3 class="mt-5 text-2xl font-semibold">Análises e Relatórios</h3>
                         <p class="mt-3 text-gray-600">Análises periódicas e relatórios visuais no Looker Studio. Foco em dados objetivos para tomada de decisão.</p>
                     </div>
 
                     <!-- Serviço 5: Consultoria -->
-                    <div class="flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm">
+                    <div class="reveal flex flex-col p-8 bg-white border border-gray-200 rounded-2xl shadow-sm" style="--i:4">
                         <svg class="w-10 h-10 text-imperial-purple" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z" /></svg>
                         <h3 class="mt-5 text-2xl font-semibold">Suporte Consultivo</h3>
                         <p class="mt-3 text-gray-600">Apoio estratégico contínuo para avaliar novas oportunidades, corrigir rotas e otimizar o funil de ponta a ponta.</p>
                     </div>
-                    
+
                     <!-- Serviço 6: Placeholder -->
-                    <div class="flex flex-col p-8 rounded-2xl bg-imperial-purple/5 border border-imperial-purple/30">
+                    <div class="reveal flex flex-col p-8 rounded-2xl bg-imperial-purple/5 border border-imperial-purple/30" style="--i:5">
                         <svg class="w-10 h-10 text-neon-blue" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
                         <h3 class="mt-5 text-2xl font-semibold">Operação Completa</h3>
                         <p class="mt-3 text-gray-700">A união de organização, estratégia e execução para empresas que buscam crescimento sólido e estruturado.</p>
@@ -266,14 +443,14 @@
     <!-- 5. Prova Social Realista (TEMA CLARO) -->
     <section class="py-20 md:py-24 bg-gray-50 text-gray-900">
         <div class="container max-w-6xl px-6 mx-auto">
-            <h2 class="section-title">Prova Social Realista</h2>
-                <p class="section-subtitle text-gray-600">
+            <h2 class="reveal section-title" style="--i:0">Prova Social Realista</h2>
+                <p class="reveal section-subtitle text-gray-600" style="--i:1">
                     Sem exageros. O foco é na maturidade e na clareza que o trabalho traz para a operação dos clientes.
                 </p>
 
                 <div class="grid grid-cols-1 gap-8 mt-20 md:grid-cols-2">
                     <!-- Depoimento 1 -->
-                    <div class="p-8 bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="reveal p-8 bg-white border border-gray-200 rounded-lg shadow-sm" style="--i:0">
                         <p class="text-xl italic leading-relaxed text-gray-700">
                             “O Rafa trouxe uma clareza que não tínhamos. Antes, investíamos em tráfego sem saber o que realmente funcionava. Hoje, temos dados.”
                         </p>
@@ -282,7 +459,7 @@
                         </p>
                     </div>
                     <!-- Depoimento 2 -->
-                    <div class="p-8 bg-white border border-gray-200 rounded-lg shadow-sm">
+                    <div class="reveal p-8 bg-white border border-gray-200 rounded-lg shadow-sm" style="--i:1">
                         <p class="text-xl italic leading-relaxed text-gray-700">
                             “O trabalho do Ufaelgestor foi essencial para organizar nosso marketing e facilitar as tomadas de decisão. Finalmente entendemos nossos gargalos.”
                         </p>
@@ -297,15 +474,15 @@
     <!-- 6. Pacotes e Planos Profissionais (TEMA CLARO COM ANCORAGEM ESCURA) -->
     <section class="py-20 md:py-24 bg-white text-gray-900">
         <div class="container max-w-6xl px-6 mx-auto">
-            <h2 class="section-title">Pacotes e Planos Profissionais</h2>
-                <p class="section-subtitle text-gray-600">
+            <h2 class="reveal section-title" style="--i:0">Pacotes e Planos Profissionais</h2>
+                <p class="reveal section-subtitle text-gray-600" style="--i:1">
                     Escolha o nível de estrutura e análise ideal para o seu momento. Sem promessas exageradas, com foco no que precisa ser feito.
                 </p>
 
                 <div class="grid grid-cols-1 gap-8 mt-20 lg:grid-cols-3 lg:items-stretch">
-                    
+
                     <!-- Plano 1: START -->
-                    <div class="flex flex-col h-full p-8 bg-white border border-gray-200 rounded-2xl shadow-lg">
+                    <div class="reveal flex flex-col h-full p-8 bg-white border border-gray-200 rounded-2xl shadow-lg" style="--i:0">
                         <h3 class="mt-4 text-2xl font-bold">START — Estrutura Inicial</h3>
                         <p class="mt-2 text-gray-600">Para quem está dando seus primeiros passos com tráfego.</p>
                         <div class="mt-6">
@@ -336,7 +513,7 @@
                     </div>
 
                     <!-- Plano 2: SCALE (Destaque ESCURO) -->
-                    <div class="relative flex flex-col h-full p-8 text-white transform scale-100 border-2 rounded-2xl bg-gray-900 border-imperial-purple lg:scale-105">
+                    <div class="reveal-fade relative flex flex-col h-full p-8 text-white transform scale-100 border-2 rounded-2xl bg-gray-900 border-imperial-purple lg:scale-105" style="--i:1">
                         <div class="absolute top-0 right-0 -mt-4 mr-6">
                             <span class="inline-block px-4 py-1 text-xs font-bold tracking-widest text-black uppercase rounded-full bg-neon-blue">Mais Popular</span>
                         </div>
@@ -370,7 +547,7 @@
                     </div>
                     
                     <!-- Plano 3: DOMINANTE -->
-                    <div class="flex flex-col h-full p-8 bg-white border border-gray-200 rounded-2xl shadow-lg">
+                    <div class="reveal flex flex-col h-full p-8 bg-white border border-gray-200 rounded-2xl shadow-lg" style="--i:2">
                         <h3 class="mt-4 text-2xl font-bold">DOMINANTE — Operação Completa</h3>
                         <p class="mt-2 text-gray-600">Para empresas que precisam de estrutura + execução + análise.</p>
                         <div class="mt-6">
@@ -411,7 +588,7 @@
     <section class="py-20 md:py-24 bg-gray-50 text-gray-900">
         <div class="container max-w-6xl px-6 mx-auto">
             <div class="grid items-center gap-16 md:grid-cols-2">
-                    <div>
+                    <div class="reveal" style="--i:0">
                         <h2 class="mt-4 text-3xl font-bold tracking-tight md:text-4xl">
                             Unindo Estratégia, Execução e Tecnologia
                         </h2>
@@ -427,17 +604,17 @@
                     </div>
                     <!-- Visual dos 3 Pilares -->
                     <div class="flex flex-col items-center justify-center space-y-4">
-                        <div class="p-6 text-center bg-white border rounded-lg shadow-md w-72 border-imperial-purple">
+                        <div class="reveal p-6 text-center bg-white border rounded-lg shadow-md w-72 border-imperial-purple" style="--i:1">
                             <h3 class="text-xl font-semibold">Estratégia</h3>
                             <p class="text-sm text-gray-600">(O que fazer e por quê)</p>
                         </div>
                         <svg class="w-6 h-6 text-neon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        <div class="p-6 text-center bg-white border rounded-lg shadow-md w-72 border-imperial-purple">
+                        <div class="reveal p-6 text-center bg-white border rounded-lg shadow-md w-72 border-imperial-purple" style="--i:2">
                             <h3 class="text-xl font-semibold">Execução</h3>
                             <p class="text-sm text-gray-600">(Como fazer da forma certa)</p>
                         </div>
                         <svg class="w-6 h-6 text-neon-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                        <div class="p-6 text-center bg-white border rounded-lg shadow-md w-72 border-imperial-purple">
+                        <div class="reveal p-6 text-center bg-white border rounded-lg shadow-md w-72 border-imperial-purple" style="--i:3">
                             <h3 class="text-xl font-semibold">Tecnologia</h3>
                             <p class="text-sm text-gray-600">(Como rastrear e otimizar)</p>
                         </div>
@@ -449,22 +626,22 @@
     <!-- 8. Ferramentas Utilizadas (TEMA CLARO) -->
     <section class="py-20 md:py-24 bg-white text-gray-900">
         <div class="container max-w-5xl px-6 mx-auto">
-            <h2 class="text-2xl font-bold text-center text-gray-600 md:text-3xl">
+            <h2 class="reveal text-2xl font-bold text-center text-gray-600 md:text-3xl" style="--i:0">
                     Ferramentas da Operação
                 </h2>
                 <div class="flex flex-wrap items-center justify-center gap-4 mt-12 md:gap-6">
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">Google Ads</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">Meta Ads</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">TikTok Ads</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">Google Tag Manager</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">Google Analytics 4</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">Facebook CAPI</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">Looker Studio</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">ManyChat</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">Make (Integromat)</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">Kommo CRM</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">Supabase</span>
-                    <span class="py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700">GitHub</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:0">Google Ads</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:1">Meta Ads</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:2">TikTok Ads</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:3">Google Tag Manager</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:4">Google Analytics 4</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:5">Facebook CAPI</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:6">Looker Studio</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:7">ManyChat</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:8">Make (Integromat)</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:8">Kommo CRM</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:8">Supabase</span>
+                    <span class="reveal-sm py-2 px-5 text-sm font-medium bg-gray-100 border border-gray-300 rounded-full text-gray-700" style="--i:8">GitHub</span>
                 </div>
             </div>
         </section>
@@ -474,7 +651,7 @@
         <div class="container max-w-6xl px-6 mx-auto">
             <div class="p-10 border rounded-2xl md:p-16 bg-gray-900/80 border-gray-800">
                     <div class="grid items-center gap-12 md:grid-cols-2">
-                        <div>
+                        <div class="reveal" style="--i:0">
                             <h2 class="text-3xl font-bold tracking-tight md:text-4xl">
                                 Diagnóstico Gratuito e Realista
                             </h2>
@@ -501,7 +678,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="text-center mt-12">
+                        <div class="reveal text-center mt-12" style="--i:1">
                             <!-- Botão Original do WhatsApp -->
                             <a href="https://wa.me/5562992234028?text=Ol%C3%A1%C2%A0Rafael!%20Vi%20seu%20site%20e%20gostaria%20de%20agendar%20meu%20Diagn%C3%B3stico%20Gratuito." target="_blank" class="cta-button">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
@@ -519,21 +696,25 @@
             <div class="grid items-center gap-12 md:grid-cols-5 md:gap-16">
                 
                 <!-- Coluna da Imagem -->
-                <div class="md:col-span-2">
-                    <!-- 
-                        INSTRUÇÃO PARA VOCÊ: 
+                <div class="reveal md:col-span-2" style="--i:0">
+                    <!--
+                        INSTRUÇÃO PARA VOCÊ:
                         Substitua a URL "https://placehold.co/..." abaixo pela URL da sua imagem.
                         A imagem que você enviou (IMG_9448.jpg) não pode ser linkada diretamente
                         desta forma. Você precisa hospedá-la em algum lugar (como Imgur, ou no seu próprio site)
                         e colar o link completo aqui no 'src'.
                     -->
-                    <img class="w-full h-80 md:h-96 object-cover object-top rounded-2xl border-2 border-imperial-purple -mt-8"  
-                         src="https://imgur.com/vLFXO5Z.jpg"
-                         alt="Foto profissional de Rafael Oliveira">
+                    <div class="img-skeleton w-full h-80 md:h-96 rounded-2xl border-2 border-imperial-purple -mt-8">
+                        <img class="w-full h-full object-cover object-top"
+                             src="https://imgur.com/vLFXO5Z.jpg"
+                             alt="Foto profissional de Rafael Oliveira"
+                             loading="lazy"
+                             decoding="async">
+                    </div>
                 </div>
-                
+
                 <!-- Coluna do Texto -->
-                <div class="md:col-span-3">
+                <div class="reveal md:col-span-3" style="--i:1">
                     <h2 class="text-3xl font-bold text-left md:text-4xl">Rafael Oliveira</h2>
                     <p class="mt-3 text-xl font-medium text-left text-imperial-purple">Especialista em Tráfego, Dados e Automação</p>
                     <p class="mt-6 text-lg text-gray-700 text-justify">
@@ -566,10 +747,10 @@
     <!-- 11. CTA Final (TEMA ESCURO) -->
     <section class="py-24 text-center md:py-32">
         <div class="container max-w-3xl px-6 mx-auto">
-            <h2 class="text-3xl font-extrabold tracking-tight md:text-5xl">
+            <h2 class="reveal text-3xl font-extrabold tracking-tight md:text-5xl" style="--i:0">
                     Pronto para organizar seu marketing e vender melhor — sem promessas milagrosas?
                 </h2>
-                <div class="mt-12">
+                <div class="reveal mt-12" style="--i:1">
                      <a href="https://wa.me/5562992234028?text=Ol%C3%A1%2C%20Rafael!%20Vi%20seu%20site%20e%20gostaria%20de%20falar%20sobre%20meu%20neg%C3%B3cio." target="_blank" class="cta-button">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path></svg>
                         Falar com Rafael — WhatsApp
@@ -580,7 +761,7 @@
 
         <!-- Rodapé -->
         <footer class="py-16 border-t border-gray-800/50">
-            <div class="container max-w-6xl px-6 mx-auto">
+            <div class="reveal container max-w-6xl px-6 mx-auto" style="--i:0">
                 <div class="flex flex-col items-center justify-between gap-6 text-center md:flex-row md:text-left">
                     <div class="text-gray-400">
                         <div class="text-lg font-semibold text-white">Ufaelgestor</div>
@@ -595,6 +776,105 @@
         </footer>
 
     </div>
+
+    <!-- Motion: loader, progresso de leitura, entrada ao rolar e skeleton de imagem -->
+    <script>
+    (function () {
+        var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        // --- Loader inicial (skeleton + progresso de carregamento) ---
+        var loader = document.getElementById('page-loader');
+        function hideLoader() {
+            if (!loader || !loader.parentNode) return;
+            loader.classList.add('page-loader--hidden');
+            loader.addEventListener('transitionend', function onEnd() {
+                loader.removeEventListener('transitionend', onEnd);
+                if (loader.parentNode) loader.remove();
+            });
+            // Fallback caso transitionend não dispare (ex.: reduced motion, aba em segundo plano)
+            setTimeout(function () {
+                if (loader.parentNode) loader.remove();
+            }, 700);
+        }
+        if (document.readyState === 'complete') {
+            hideLoader();
+        } else {
+            window.addEventListener('load', hideLoader);
+        }
+
+        // --- Barra de progresso de leitura da página ---
+        var progressBar = document.getElementById('scroll-progress');
+        function updateProgress() {
+            if (!progressBar) return;
+            var doc = document.documentElement;
+            var scrollTop = window.scrollY || doc.scrollTop;
+            var scrollHeight = doc.scrollHeight - doc.clientHeight;
+            var progress = scrollHeight > 0 ? Math.min(Math.max(scrollTop / scrollHeight, 0), 1) : 0;
+            progressBar.style.transform = 'scaleX(' + progress + ')';
+        }
+        var progressTicking = false;
+        window.addEventListener('scroll', function () {
+            if (!progressTicking) {
+                window.requestAnimationFrame(function () {
+                    updateProgress();
+                    progressTicking = false;
+                });
+                progressTicking = true;
+            }
+        }, { passive: true });
+        updateProgress();
+
+        // --- Entrada do Hero (acima da dobra) assim que o loader some ---
+        var heroEls = document.querySelectorAll('.hero-reveal');
+        function revealHero() {
+            heroEls.forEach(function (el) { el.classList.add('in-view'); });
+        }
+        if (prefersReducedMotion) {
+            revealHero();
+        } else if (document.readyState === 'complete') {
+            window.requestAnimationFrame(revealHero);
+        } else {
+            window.addEventListener('load', function () {
+                window.requestAnimationFrame(revealHero);
+            });
+        }
+
+        // --- Entrada ao rolar (scroll reveal) para o restante da página ---
+        var revealEls = document.querySelectorAll('.reveal:not(.hero-reveal), .reveal-fade:not(.hero-reveal), .reveal-sm:not(.hero-reveal)');
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            revealEls.forEach(function (el) { el.classList.add('in-view'); });
+        } else {
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    var el = entry.target;
+                    el.style.willChange = 'transform, opacity, filter';
+                    el.classList.add('in-view');
+                    el.addEventListener('transitionend', function onEnd() {
+                        el.removeEventListener('transitionend', onEnd);
+                        el.style.willChange = '';
+                    });
+                    observer.unobserve(el);
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+            revealEls.forEach(function (el) { observer.observe(el); });
+        }
+
+        // --- Skeleton + lazy loading da foto de perfil ---
+        document.querySelectorAll('.img-skeleton img').forEach(function (img) {
+            var wrapper = img.closest('.img-skeleton');
+            function markLoaded() {
+                if (wrapper) wrapper.classList.add('img-skeleton--loaded');
+            }
+            if (img.complete && img.naturalWidth > 0) {
+                markLoaded();
+            } else {
+                img.addEventListener('load', markLoaded);
+                img.addEventListener('error', markLoaded);
+            }
+        });
+    })();
+    </script>
 
 </body>
 </html>
