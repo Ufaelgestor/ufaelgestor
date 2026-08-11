@@ -21,7 +21,7 @@ jobs:
       - run: npm run arch
 
   unit-tests:
-    name: Testes unitários e de integração (Vitest + Codecov)
+    name: Testes unitários e de integração (Vitest)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -31,12 +31,12 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run coverage
-      - name: Upload de cobertura para o Codecov
-        uses: codecov/codecov-action@v4
+      - name: Publica relatório de cobertura como artefato do CI
+        uses: actions/upload-artifact@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
-          fail_ci_if_error: false
+          name: coverage-report
+          path: coverage/
+          retention-days: 30
 
   e2e-tests:
     name: Testes end-to-end (Playwright)
