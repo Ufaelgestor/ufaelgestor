@@ -69,15 +69,18 @@ Polícia Militar do Estado de Goiás; Polícia Civil do Estado de Goiás; Políc
 
 Cada produto tem público, oportunidade e dores específicas — **não reutilize o mesmo argumento automaticamente para todos os produtos**. A estrutura pode ser mantida; a mensagem precisa ser adaptada.
 
-### Formato "curso online" — diferencial é flexibilidade/acesso, não conteúdo (2026-08-27)
+### Formato "curso online" — diferencial é flexibilidade/acesso, não conteúdo (2026-08-27, corrigido)
 
 Quando o pedido especificar "curso online" (em vez do produto genérico ou presencial), o conteúdo do curso é o mesmo — o que muda é o motivo da escolha desse formato. Persona de quem busca online:
 - Trabalha e não tem horário fixo compatível com turma presencial.
 - Mora fora de Goiás ou longe do polo físico — lembrando que o RS Concursos vende pro Brasil todo (ver cuidado de público na seção 7), então "não precisa estar em Goiás" é um ângulo real aqui, não em outros produtos.
-- Quer começar imediatamente, sem esperar fechar turma (diferencial real vs. presencial, que costuma ter data de início de turma).
-- Prefere estudar no próprio ritmo, sem depender do ritmo de uma turma.
+- Quer começar imediatamente, sem esperar fechar turma.
+- Prefere estudar no próprio ritmo.
 
-O ângulo de venda é **flexibilidade e acesso**, não "o conteúdo é melhor". Não confunda com os ângulos de urgência/reta final (esses são de campanha pós-edital, não do formato online).
+**Duas regras obrigatórias (confirmado pelo dono do negócio, 2026-08-27):**
+
+1. **Nunca diminua, ridicularize ou menospreze o ensino presencial.** O RS Concursos vende os dois produtos — qualquer contraste que faça o presencial parecer inferior, restritivo ou pior ("sem depender de bater ponto numa sala de aula", "sem ficar travado esperando os outros") prejudica o outro produto da empresa. Trate presencial e online como equivalentes em qualidade ("mesmo conteúdo", "mesmo método", "mesmo padrão") — a diferença é só o formato de acesso, nunca o valor.
+2. **O público do curso online continua sendo o mesmo público aspiracional de sempre — sonha em ser policial.** Não é uma persona "pragmática" à parte (isso seria confundir com o caso da GCM). O gancho principal continua sendo o sonho/objetivo de entrar pra carreira; o online é o que **viabiliza** esse sonho pra quem tem uma limitação prática (horário, localização), não o argumento central do roteiro. Comece pelo sonho, não pela funcionalidade.
 
 ### Operação [Forças Policiais] [Estado] — produto multi-concurso
 
